@@ -1,17 +1,24 @@
-import time
 import config
 import game_func
 grid=[]
 for i in range (config.Rows):
     row=[0]*config.Cols
     grid.append(row)
-game_func.print_grid(grid)
-tuple_list=game_func.user_input()
+tuple_list = game_func.user_input()
 while not game_func.check_coordinates(tuple_list):
-    print("invalid coordinates please renter")
-    tuple_list=game_func.user_input()
-
-
-
-
-
+    print("Invalid coordinates, please re-enter.")
+    tuple_list = game_func.user_input()
+game_func.tuple_to_grid(grid, tuple_list)
+game_running = True
+while game_running:
+    game_func.print_grid(grid)
+    grid = game_func.game_logic(grid)
+    if game_func.is_over(grid):
+        print("All the cells are dead, Thanks for playing!")
+        game_func.print_grid(grid)
+        game_running = False
+    else:
+        user_choice = input("Press Enter to continue, or any other key + Enter to quit: ")
+        if user_choice != "":
+            print("Thanks for playing!")
+            game_running = False
