@@ -1,4 +1,6 @@
 import config
+
+# Prints the current grid to the terminal with borders and cell representations.
 def print_grid(grid):
     for i in range (config.Rows):
         print (config.separator) #print separator lines
@@ -11,6 +13,7 @@ def print_grid(grid):
         print("|")
     print(config.separator)
 
+# Prompts the user for coordinate pairs and parses them into 0-indexed (row, col) tuples.
 def user_input():
     my_list=[]
     print("Enter live cell coordinates as 'row,col' separated by spaces:")
@@ -23,6 +26,7 @@ def user_input():
         my_list.append((x,y))
     return my_list
 
+# Validates that all given coordinates fall within the grid boundaries.
 def check_coordinates(my_list):
     for i in my_list:
         x=i[0]
@@ -31,10 +35,12 @@ def check_coordinates(my_list):
             return False
     return True
 
+# Updates the grid by setting cells at the specified coordinates to alive (1).
 def tuple_to_grid(grid,tuple_list):
     for x,y in tuple_list:
         grid[x][y]=1
 
+# Computes and returns the next generation grid according to Conway's rules.
 def game_logic(grid):
     new_grid = []
     for i in range(config.Rows):
@@ -51,6 +57,7 @@ def game_logic(grid):
                     new_grid[i][j] = 1
     return new_grid
 
+# Counts and returns the number of alive neighbors adjacent to a given cell.
 def count_alive_neighbors(grid,r,c):
     vectors_list=[(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
     counter_res=0
@@ -62,12 +69,10 @@ def count_alive_neighbors(grid,r,c):
                 counter_res += 1
     return counter_res
 
+# Checks whether the game has ended by verifying if all cells are dead.
 def is_over(grid):
     for i in range(config.Rows):
         for j in range(config.Cols):
             if grid[i][j] == 1:
                 return False
     return True
-
-
-
